@@ -60,11 +60,14 @@ void rb2dPush(RingBuffer2d *rb2d, void *array) {
 }
 
 void rb2dPop(RingBuffer2d *rb2d, void *array) {
-
+	memmove(array, rb2d->buffer[rb2d->readIndex++ & rb2d->rows - 1],rb2d->cols * rb2d->eleSize);
 }
 
 void rb2dReadCol(RingBuffer2d *rb2d, void *array, int n) {
-
+	int i;
+	for (i = 0; i < n; i++) {
+		
+	}	
 }
 
 // Returns number of read/writeable rows
@@ -94,7 +97,9 @@ void rb2dPrintInt(RingBuffer2d *rb2d) {
 			printf("%i,",*((int *)bufferStart + j));
 		}
 	}
+	printf("End of line\n");
 }
+
 void rb2dPrintFloat(RingBuffer2d *rb2d) {
 	printf("Printing all data as float\n");
 	int i,j;
@@ -105,9 +110,21 @@ void rb2dPrintFloat(RingBuffer2d *rb2d) {
 		{
 			printf("%f,",*((float *)bufferStart + j));
 		}
-		printf("\n");
-
+		printf("End of line\n");
+		
 	}
+}
+
+void printIntArray(int *array, int len) {
+	int i;
+	for (i = 0; i < len; i++) {
+		printf("%i,",array[i]);
+	}
+	printf("\n"); 
+}
+
+void printDetails(RingBuffer2d *rb2d) {
+	printf("Rows:%i Cols:%i Read:%i Write:%i\n",rb2d->rows,rb2d->cols,rb2d->readIndex,rb2d->writeIndex); 
 }
 
 int main(void) {
@@ -119,13 +136,34 @@ int main(void) {
     int *onesArr = calloc(rb2d->cols, sizeof(int));
     //memset(onesArr,1,rb2d->cols * sizeof(int));
     int *arr1 = malloc(rb2d->cols * sizeof(int));
+    int *arr2 = malloc(rb2d->cols * sizeof(int));
+    int *popArr = calloc(rb2d->cols, sizeof(int));
     int i;
     for (i = 0; i < rb2d->cols; i++)
     {
     	arr1[i] = i;
+	arr2[i] = 2 * i;
+	onesArr[i] = 1;
     }
-    rb2dPush(rb2d, emptyArr);
+
+    printDetails(rb2d);
+//    rb2dPush(rb2d, emptyArr);
     rb2dPush(rb2d, arr1);
     rb2dPush(rb2d, onesArr);
+    rb2dPush(rb2d, arr2);
+    printDetails(rb2d);
     rb2dPrintInt(rb2d);
+
+    printIntArray(popArr,rb2d->cols);
+    rb2dPop(rb2d,popArr);
+
+    printDetails(rb2d);
+
+    printIntArray(popArr,rb2d->cols);
+    rb2dPop(rb2d,popArr);
+
+    printIntArray(popArr,rb2d->cols);
+    printDetails(rb2d);
 }
+
+
