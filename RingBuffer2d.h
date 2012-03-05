@@ -44,7 +44,7 @@ void rb2dPush(RingBuffer2d *rb2d, void *array);
 
 void rb2dPop(RingBuffer2d *rb2d, void *array);
 
-void rb2dReadCol(RingBuffer2d *rb2d, void *array, int n);
+void rb2dReadCol(RingBuffer2d *rb2d, void *array, int colIndex, int n);
 
 // Returns number of read/writeable rows
 size_t rb2dWriteCapacity(RingBuffer2d *rb2d);

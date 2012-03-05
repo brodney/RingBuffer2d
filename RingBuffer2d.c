@@ -63,10 +63,10 @@ void rb2dPop(RingBuffer2d *rb2d, void *array) {
 	memmove(array, rb2d->buffer[rb2d->readIndex++ & rb2d->rows - 1],rb2d->cols * rb2d->eleSize);
 }
 
-void rb2dReadCol(RingBuffer2d *rb2d, void *array, int n) {
+void rb2dReadCol(RingBuffer2d *rb2d, void *array, int colIndex, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
-		
+		memmove(array + (i * rb2d->eleSize),rb2d->buffer[(rb2d->readIndex - i) & rb2d->rows - 1] + colIndex * rb2d->eleSize,rb2d->eleSize);
 	}	
 }
 
@@ -154,6 +154,10 @@ int main(void) {
     printDetails(rb2d);
     rb2dPrintInt(rb2d);
 
+    int *colPop = malloc(5 * sizeof(int));
+    rb2dReadCol(rb2d,colPop,3,5);
+    printIntArray(colPop,5);
+   
     printIntArray(popArr,rb2d->cols);
     rb2dPop(rb2d,popArr);
 
@@ -164,6 +168,10 @@ int main(void) {
 
     printIntArray(popArr,rb2d->cols);
     printDetails(rb2d);
+
+
+    rb2dReadCol(rb2d,colPop,3,5);
+    printIntArray(colPop,5);
 }
 
 
