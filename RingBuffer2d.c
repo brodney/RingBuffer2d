@@ -72,17 +72,17 @@ void rb2dReadCol(RingBuffer2d *rb2d, void *array, int colIndex, int n) {
 
 // Returns number of read/writeable rows
 size_t rb2dWriteCapacity(RingBuffer2d *rb2d) {
-
+	return rb2d->rows - rb2dReadCapacity(rb2d);
 }
 size_t rb2dReadCapacity(RingBuffer2d *rb2d) {
-
+	return rb2d->writeIndex - rb2d->readIndex;
 }
 
 int rb2dFull(RingBuffer2d *rb2d) {
-
+	return rb2dWriteCapacity(rb2d) == 0;
 }
 int rb2dEmpty(RingBuffer2d *rb2d) {
-
+	return rb2dReadCapacity == 0;
 }
 
 void rb2dPrintInt(RingBuffer2d *rb2d) {
