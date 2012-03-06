@@ -55,6 +55,12 @@ RingBuffer2d * rb2dInit(int numCol, int numRow, size_t elemsize) {
 	return rb2d;
 }
 
+void rb2dDestroy(RingBuffer2d *rb2d) {
+
+	free(rb2d->buffer);
+	free(rb2d);
+}
+
 void rb2dPush(RingBuffer2d *rb2d, void *array) {
 	memmove(rb2d->buffer[rb2d->writeIndex++ & rb2d->rows - 1],array,rb2d->cols * rb2d->eleSize);
 }
@@ -106,13 +112,14 @@ void rb2dPrintFloat(RingBuffer2d *rb2d) {
 	for (i = 0; i < rb2d->rows; i++)
 	{
 		void *bufferStart = rb2d->buffer[i];
+		printf("\n");
 		for (j = 0; j < rb2d->cols; j++)
 		{
 			printf("%f,",*((float *)bufferStart + j));
 		}
-		printf("End of line\n");
 		
 	}
+	printf("End of line\n");
 }
 
 void printIntArray(int *array, int len) {
@@ -128,7 +135,7 @@ void printDetails(RingBuffer2d *rb2d) {
 }
 
 int main(void) {
-    printf("\n::Testing each function::\n");
+    printf("::Testing each function::\n\n");
     RingBuffer2d *rb2d = rb2dInit(10,14,sizeof(int));
     rb2dPrintInt(rb2d);
 
@@ -172,6 +179,15 @@ int main(void) {
 
     rb2dReadCol(rb2d,colPop,3,5);
     printIntArray(colPop,5);
+
+    rb2dDestroy(rb2d);
+
+    printf("::Testing floats::\n\n");
+    rb2d = rb2dInit(10,14,sizeof(float));
+    rb2dPrintFloat(rb2d);    
+
+
 }
+
 
 
