@@ -57,4 +57,4 @@ int rb2dEmpty(RingBuffer2d *rb2d);
 void rb2dPrintInt(RingBuffer2d *rb2d);
 void rb2dPrintFloat(RingBuffer2d *rb2d);
 
-int roundNextPowerof2(int inVal);
+int rb2dRoundNextPowerof2(int inVal);

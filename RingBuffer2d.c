@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include "RingBuffer2d.h"
 
-int roundNextPowerof2(int inVal) {
+int rb2dRoundNextPowerof2(int inVal) {
     int pow2 = 1;
     while (inVal > pow2 && pow2 < (1 << 30) - 1) {
         pow2 = pow2 << 1;
@@ -38,7 +38,7 @@ int roundNextPowerof2(int inVal) {
 // numRow will be rounded up to a power of 2
 RingBuffer2d * rb2dInit(int numCol, int numRow, size_t elemsize) {
 	RingBuffer2d *rb2d = malloc(sizeof(RingBuffer2d));
-	rb2d->rows = roundNextPowerof2(numRow);
+	rb2d->rows = rb2dRoundNextPowerof2(numRow);
 	rb2d->cols = numCol;
 	rb2d->eleSize = elemsize;
 	rb2d->writeIndex = rb2d->readIndex = 0;
@@ -91,7 +91,7 @@ int rb2dEmpty(RingBuffer2d *rb2d) {
 	return rb2dReadCapacity == 0;
 }
 
-void rb2dPrintInt(RingBuffer2d *rb2d) {
+void rb2dPrrintInt(RingBuffer2d *rb2d) {
 	printf("Printing all data as int.\n");
 	int i,j;
 	for (i = 0; i < (int)rb2d->rows; i++)
@@ -106,7 +106,7 @@ void rb2dPrintInt(RingBuffer2d *rb2d) {
 	printf("End of line\n");
 }
 
-void rb2dPrintFloat(RingBuffer2d *rb2d) {
+void rb2dPrrintFloat(RingBuffer2d *rb2d) {
 	printf("Printing all data as float\n");
 	int i,j;
 	for (i = 0; i < rb2d->rows; i++)
@@ -122,7 +122,7 @@ void rb2dPrintFloat(RingBuffer2d *rb2d) {
 	printf("End of line\n");
 }
 
-void printIntArray(int *array, int len) {
+void prrintIntArray(int *array, int len) {
 	int i;
 	for (i = 0; i < len; i++) {
 		printf("%i,",array[i]);
@@ -130,14 +130,14 @@ void printIntArray(int *array, int len) {
 	printf("\n"); 
 }
 
-void printDetails(RingBuffer2d *rb2d) {
+void prrintDetails(RingBuffer2d *rb2d) {
 	printf("Rows:%i Cols:%i Read:%i Write:%i\n",rb2d->rows,rb2d->cols,rb2d->readIndex,rb2d->writeIndex); 
 }
-
+/*
 int main(void) {
     printf("::Testing each function::\n\n");
     RingBuffer2d *rb2d = rb2dInit(10,14,sizeof(int));
-    rb2dPrintInt(rb2d);
+    rb2dPrrintInt(rb2d);
 
     int *emptyArr = calloc(rb2d->cols, sizeof(int));
     int *onesArr = calloc(rb2d->cols, sizeof(int));
@@ -153,41 +153,41 @@ int main(void) {
 	onesArr[i] = 1;
     }
 
-    printDetails(rb2d);
+    prrintDetails(rb2d);
 //    rb2dPush(rb2d, emptyArr);
     rb2dPush(rb2d, arr1);
     rb2dPush(rb2d, onesArr);
     rb2dPush(rb2d, arr2);
-    printDetails(rb2d);
-    rb2dPrintInt(rb2d);
+    prrintDetails(rb2d);
+    rb2dPrrintInt(rb2d);
 
     int *colPop = malloc(5 * sizeof(int));
     rb2dReadCol(rb2d,colPop,3,5);
-    printIntArray(colPop,5);
+    prrintIntArray(colPop,5);
    
-    printIntArray(popArr,rb2d->cols);
+    prrintIntArray(popArr,rb2d->cols);
     rb2dPop(rb2d,popArr);
 
-    printDetails(rb2d);
+    prrintDetails(rb2d);
 
-    printIntArray(popArr,rb2d->cols);
+    prrintIntArray(popArr,rb2d->cols);
     rb2dPop(rb2d,popArr);
 
-    printIntArray(popArr,rb2d->cols);
-    printDetails(rb2d);
+    prrintIntArray(popArr,rb2d->cols);
+    prrintDetails(rb2d);
 
 
     rb2dReadCol(rb2d,colPop,3,5);
-    printIntArray(colPop,5);
+    prrintIntArray(colPop,5);
 
     rb2dDestroy(rb2d);
 
     printf("::Testing floats::\n\n");
     rb2d = rb2dInit(10,14,sizeof(float));
-    rb2dPrintFloat(rb2d);    
+    rb2dPrrintFloat(rb2d);    
 
 
-}
+}*/
 
 
 
