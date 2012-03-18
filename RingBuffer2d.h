@@ -38,7 +38,7 @@ typedef struct RingBuffer2d {
 } RingBuffer2d;
 
 // Rows will be rounded to next power of 2. Cols has no restrictions
-RingBuffer2d * rb2dInit(int numCol, int numRow, size_t elemsize);
+RingBuffer2d * rb2dInit(int numRow, int numCol, size_t elemsize);
 void rb2dDestroy(RingBuffer2d *rb2d);
 
 void rb2dPush(RingBuffer2d *rb2d, void *array);

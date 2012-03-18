@@ -36,7 +36,7 @@ int rb2dRoundNextPowerof2(int inVal) {
 }
 
 // numRow will be rounded up to a power of 2
-RingBuffer2d * rb2dInit(int numCol, int numRow, size_t elemsize) {
+RingBuffer2d * rb2dInit(int numRow, int numCol, size_t elemsize) {
 	RingBuffer2d *rb2d = malloc(sizeof(RingBuffer2d));
 	rb2d->rows = rb2dRoundNextPowerof2(numRow);
 	rb2d->cols = numCol;
