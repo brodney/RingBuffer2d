@@ -91,7 +91,7 @@ int rb2dEmpty(RingBuffer2d *rb2d) {
 	return rb2dReadCapacity == 0;
 }
 
-void rb2dPrrintInt(RingBuffer2d *rb2d) {
+void rb2dPrintInt(RingBuffer2d *rb2d) {
 	printf("Printing all data as int.\n");
 	int i,j;
 	for (i = 0; i < (int)rb2d->rows; i++)
@@ -106,7 +106,7 @@ void rb2dPrrintInt(RingBuffer2d *rb2d) {
 	printf("End of line\n");
 }
 
-void rb2dPrrintFloat(RingBuffer2d *rb2d) {
+void rb2dPrintFloat(RingBuffer2d *rb2d) {
 	printf("Printing all data as float\n");
 	int i,j;
 	for (i = 0; i < rb2d->rows; i++)
